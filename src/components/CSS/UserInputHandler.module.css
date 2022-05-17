@@ -1,0 +1,68 @@
+
+.user-input--wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.user-input--input {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.user-input--input-field {
+  /* typography: under App.css */
+  margin: auto;
+  padding: var(--text-padding);
+
+  border-radius: var(--border-radius);
+  border: none;
+  background-color: rgba(255, 255, 255, 0.5);
+  border: 3px rgba(0, 0, 0, 0) solid;
+  transition: all 0.5s ease-out;
+}
+.user-input--input-field:focus {
+  outline: none;
+  background-color: rgba(255, 255, 255, 0.6);
+  border: 3px black solid;
+}
+
+.user-input--button {
+  border: none;
+  background-color: var(--button-color);
+  cursor: pointer;
+  box-shadow: 0.2rem 0.2rem 0.2rem rgba(0, 0, 0, 0.425);
+}
+
+.user-input--add-button {
+  width: 2.5rem;
+  height: 2.5rem;
+  margin: 0.5rem;
+
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.user-input--clear-button {
+  /* typography: under App.css */
+  width: 100%;
+  margin: auto;
+  padding: var(--text-padding);
+  border-radius: var(--border-radius);
+}
+
+.user-input--clear-button:disabled,
+.user-input--add-button:disabled {
+  cursor: not-allowed;
+  box-shadow: none;
+  filter: grayscale(60%);
+}
+
+.user-input--clear-button:not(:disabled):hover,
+.user-input--add-button:not(:disabled):hover {
+  transform: translate(0.1rem);
+  box-shadow: none;
+}
