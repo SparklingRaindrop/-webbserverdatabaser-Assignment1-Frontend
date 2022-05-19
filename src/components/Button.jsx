@@ -1,20 +1,19 @@
 import React from 'react'
-import { Icon, DeleteButtonWrapper, AddButtonWrapper, TextButtonWrapper } from './styles/Button.styled';
-import binIcon from '../assets/rubbish-bin-icon.svg';
-import addIcon from '../assets/addButton.svg';
+import { DeleteButtonWrapper, AddButtonWrapper, TextButtonWrapper } from './styles/Button.styled';
+import Icon from './Icon';
 
 export function DeleteButton(props) {
     return (
-        <DeleteButtonWrapper {...props}>
-            <Icon src={binIcon} alt='Remove' />
+        <DeleteButtonWrapper {...props} className={props.className} title='Remove'>
+            <Icon name='bin' />
         </DeleteButtonWrapper>
     )
 }
 
 export function AddButton(props) {
     return (
-        <AddButtonWrapper {...props}>
-            <Icon src={addIcon} alt='Add task' />
+        <AddButtonWrapper {...props} title='Add task'>
+            <Icon name='plus' />
         </AddButtonWrapper>
     )
 }

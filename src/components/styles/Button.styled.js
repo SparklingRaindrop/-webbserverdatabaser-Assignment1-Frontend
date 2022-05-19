@@ -1,8 +1,15 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.button`
+    padding: 0;
+    margin: 0;
     border: none;
     cursor: pointer;
+    background-color: transparent;
+
+    font-family: ${({theme}) => theme.typography.button.family};
+    font-weight: ${({theme}) => theme.typography.button.weight};
+    font-size: ${({theme}) => theme.typography.button.size};
 
     &:disabled {
         cursor: not-allowed;
@@ -11,26 +18,20 @@ export const Wrapper = styled.button`
     }
 `;
 
-export const Icon = styled.img`
-    width: 100%;
-`;
-
 export const DeleteButtonWrapper = styled(Wrapper)`
     width: 2rem;
-    margin-left: auto;
+    height: 2rem;
+
+    border-radius: ${({theme}) => theme.borderRadius};
+
+    &:hover {
+        background-color: ${({theme}) => theme.colors.background.button.hover};
+    }
 `;
 
-export const AddButtonWrapper = styled(Wrapper)`
-    background-color: ${({theme}) => theme.colors.button};
-    cursor: pointer;
-    box-shadow: 0.2rem 0.2rem 0.2rem rgba(0, 0, 0, 0.425);
-
-    width: 2.5rem;
-    height: 2.5rem;
-    margin: 0.5rem;
-
-    border-radius: 50%;
-    display: inline-block;
+export const PurpleButton = styled(Wrapper)`
+    background-color: ${({theme}) => theme.colors.background.button.purple};
+    box-shadow: 0.2rem 0.2rem 0.2rem rgba(0, 0, 0, 0.5);
 
     &:disabled {
         cursor: not-allowed;
@@ -43,10 +44,20 @@ export const AddButtonWrapper = styled(Wrapper)`
         box-shadow: none;
     }
 `;
+export const AddButtonWrapper = styled(PurpleButton)`
+    width: 2.5rem;
+    height: 2.5rem;
+    margin: 0.5rem;
 
-export const TextButtonWrapper = styled(Wrapper)`
+    color: white;
+    display: inline-block;
+    border-radius: 50%;
+`;
+
+export const TextButtonWrapper = styled(PurpleButton)`
     width: 100%;
     margin: auto;
     padding: ${({theme}) => theme.padding};
+
     border-radius: ${({theme}) => theme.borderRadius};
 `;
