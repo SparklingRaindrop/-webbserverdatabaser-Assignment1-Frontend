@@ -3,26 +3,26 @@ import { Icon, DeleteButtonWrapper, AddButtonWrapper, TextButtonWrapper } from '
 import binIcon from '../assets/rubbish-bin-icon.svg';
 import addIcon from '../assets/addButton.svg';
 
-export function DeleteButton() {
+export function DeleteButton(props) {
     return (
-        <DeleteButtonWrapper>
+        <DeleteButtonWrapper {...props}>
             <Icon src={binIcon} alt='Remove' />
         </DeleteButtonWrapper>
     )
 }
 
-export function AddButton({ disabled }) {
+export function AddButton(props) {
     return (
-        <AddButtonWrapper disabled={disabled}>
+        <AddButtonWrapper {...props}>
             <Icon src={addIcon} alt='Add task' />
         </AddButtonWrapper>
     )
 }
 
 export function Button(props) {
-    const { text, disabled } = props;
+    const { text } = props;
     return (
-        <TextButtonWrapper disabled={disabled}>
+        <TextButtonWrapper {...props}>
             {text}
         </TextButtonWrapper>
     )
