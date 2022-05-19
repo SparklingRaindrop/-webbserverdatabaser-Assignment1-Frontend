@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
-import axios from 'axios';
 
 import useApi from '../hooks/useApi';
 import { dataState } from '../recoil/data/atom';
@@ -41,6 +40,11 @@ export default function InputHandler() {
         }
     }
 
+    function handleAddTask() {
+        addTask(inputValue);
+        setInputValue('');
+    }
+
     function handleUserInput(event) {
         setInputValue(event.target.value);
     }
@@ -59,7 +63,7 @@ export default function InputHandler() {
                     onChange={handleUserInput}
                     value={inputValue} />
                 <AddButton
-                    onClick={() => addTask(inputValue)}
+                    onClick={handleAddTask}
                     disabled={!hasValidInput} />
             </Upper>
             <Button
