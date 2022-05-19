@@ -1,27 +1,24 @@
 import React from 'react';
-import styles from './CSS/TaskList.module.css';
-
-// Components
+import { useRecoilValue } from 'recoil';
+import { dataState } from '../recoil/data/atom';
+import { List, NoTaskMessage } from './styles/TaskList.styled';
 import Task from './Task';
 
-// This component get rendered only when "tasks > 0"
-export default function TaskList(props) {
-    const { tasks, toggleCompletion, handleRemoveTask } = props;
+export default function TaskList() {
+    const tasks = useRecoilValue(dataState);
 
-    const items = tasks.map((task) => (
-        <Task
-            key={task.id}
-            id={task.id}
-            taskName={task.taskName}
-            completion={task.completion}
-            toggleCompletion={toggleCompletion}
-            handleRemoveTask={handleRemoveTask}
-        />
-    ));
-
+    if (tasks.length === 0) {
+        return (
+            <NoTaskMessage>
+                Currently No Tasks
+            </NoTaskMessage>
+        )
+    }
     return (
-        <ul className={styles['to-do-list']}>
-            {items}
-        </ul>
+        <List>
+            {
+                tasks.map(task => <Task key={task.id} {...task} />)
+            }
+        </List>
     )
 }

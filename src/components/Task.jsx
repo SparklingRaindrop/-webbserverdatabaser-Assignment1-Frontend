@@ -1,40 +1,23 @@
-import React from "react";
-import styles from "./CSS/Task.module.css";
-import removeButton from "./assets/rubbish-bin-icon.svg";
+import React from 'react';
+import { CheckBox, Name, Wrapper } from './styles/Task.styled';
+import { DeleteButton } from './Button';
 
 export default function Task(props) {
-    const { taskName, toggleCompletion, id, handleRemoveTask, completion } = props;
-
-    function toggleCheckbox() {
-        toggleCompletion(id);
-    }
-
-    function handleClickRemove() {
-        handleRemoveTask(id);
-    }
-
+    const { completion, id, taskName } = props;
     return (
-        <li className={styles['task--list-item']}>
-            <input
-                type="checkbox"
+        <Wrapper>
+            <CheckBox
                 id={id}
-                className={styles['task--checkbox']}
                 name={taskName}
                 checked={completion ? true : null}
-                onChange={toggleCheckbox}
+                onChange={() => toggleCompletion(id)}
             />
-            <label
-                htmlFor={id}
-                className={styles['task--checkbox-label']}
-            >
+            <Name htmlFor={id}>
                 {taskName}
-            </label>
-            <img
-                src={removeButton}
-                className={`icon ${styles['task--rubbish-bin']}`}
-                onClick={handleClickRemove}
-                alt="Remove"
+            </Name>
+            <DeleteButton
+                onClick={() => handleRemoveTask(id)}
             />
-        </li>
-    );
+        </Wrapper>
+    )
 }

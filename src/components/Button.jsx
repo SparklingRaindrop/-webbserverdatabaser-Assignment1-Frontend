@@ -1,25 +1,29 @@
-import React from 'react';
-import styles from './CSS/Button.module.css'
+import React from 'react'
+import { Icon, DeleteButtonWrapper, AddButtonWrapper, TextButtonWrapper } from './styles/Button.styled';
+import binIcon from '../assets/rubbish-bin-icon.svg';
+import addIcon from '../assets/addButton.svg';
 
-export default function Button(props) {
-    const { text, handleClick, enabledCondition, name, img } = props;
-
-    const label = img ?
-        <img src={img} alt={name} className="icon" /> :
-        `${text}`;
-
-    const indivisualClass = name ? `user-input--${name}` : null;
-    const allClasses = indivisualClass === null ?
-        `${styles['user-input--button']}` :
-        `${styles['user-input--button']} ${styles[indivisualClass]}`;
-
+export function DeleteButton() {
     return (
-        <button
-            className={allClasses}
-            onClick={handleClick}
-            disabled={!enabledCondition}
-        >
-            {label}
-        </button>
+        <DeleteButtonWrapper>
+            <Icon src={binIcon} alt='Remove' />
+        </DeleteButtonWrapper>
+    )
+}
+
+export function AddButton({ disabled }) {
+    return (
+        <AddButtonWrapper disabled={disabled}>
+            <Icon src={addIcon} alt='Add task' />
+        </AddButtonWrapper>
+    )
+}
+
+export function Button(props) {
+    const { text, disabled } = props;
+    return (
+        <TextButtonWrapper disabled={disabled}>
+            {text}
+        </TextButtonWrapper>
     )
 }
