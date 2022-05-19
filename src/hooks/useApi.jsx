@@ -1,30 +1,56 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useSetRecoilState } from "recoil";
+import { dataState } from "../recoil/data/atom";
+
 
 export default function useApi(query = '') {
-    const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
-    const [isError, setIsError] = useState(false);
+    const setData = useSetRecoilState(dataState);
 
-    useEffect(() => {
-        async function fetchData() {
-            setIsError(false);
-            try {
-                const url = `http://localhost:5000/todos/${query}`;
-                const response = await axios(url);
-                const data = response.data.sort(sortTasks);
-                setData(data);
-            } catch (e) {
-                setIsError(true);
-            }
-            setIsLoading(false);
-        }
-
+    async function fetchData() {
         setIsLoading(true);
-        fetchData();
-    }, [query]);
+        try {
+            const url = `http://localhost:5000/todos/`;
+            const response = await axios(url);
+            const data = response.data.sort(sortTasks);
+            setData(data);
+        } catch (e) {
+            console.log('There is something wrong');
+        }
+        setIsLoading(false);
+    }
 
-    return { data, isLoading, isError };
+    async function removeTask(id) {
+        try {
+            await axios.delete(`http://localhost:5000/todos/${id}`);
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    async function addTask(str) {
+        try {
+            await axios.post('http://localhost:5000/todos/', {
+                taskName: str,
+                completion: false,
+            });
+            fetchData();
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    async function updateTask(obj) {
+        try {
+            await axios.patch(`http://localhost:5000/todos/${query}`, obj);
+            fetchData();
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    return { isLoading, fetchData, addTask, removeTask, updateTask };
 }
 
 //Callback function for sort()

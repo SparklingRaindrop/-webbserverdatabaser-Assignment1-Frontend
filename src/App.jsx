@@ -12,8 +12,6 @@ import ToDoList from './components/ToDoList';
 import { useSetRecoilState } from "recoil";
 import { dataState } from "./recoil/data/atom";
 
-
-
 const GlobalStyles = createGlobalStyle`
     body {
         background: url(${img}) center center fixed;
@@ -22,18 +20,10 @@ const GlobalStyles = createGlobalStyle`
 `
 
 export default function App() {
-    //const setData = useSetRecoilState(dataState);
-    const setData = useSetRecoilState(dataState);
-    const { data, isLoading, isError } = useApi();
+    const { isLoading, fetchData } = useApi();
 
     useEffect(() => {
-        if (!isLoading) {
-            setData(data);
-        }
-        if (isError) {
-            console.log('There is something wrong');
-        }
-
+        fetchData();
     }, [isLoading]);
 
     return (
