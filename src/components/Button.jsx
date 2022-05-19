@@ -1,25 +1,28 @@
-import React from 'react';
-import styles from './CSS/Button.module.css'
+import React from 'react'
+import { DeleteButtonWrapper, AddButtonWrapper, TextButtonWrapper } from './styles/Button.styled';
+import Icon from './Icon';
 
-export default function Button(props) {
-    const { text, handleClick, enabledCondition, name, img } = props;
-
-    const label = img ?
-        <img src={img} alt={name} className="icon" /> :
-        `${text}`;
-
-    const indivisualClass = name ? `user-input--${name}` : null;
-    const allClasses = indivisualClass === null ?
-        `${styles['user-input--button']}` :
-        `${styles['user-input--button']} ${styles[indivisualClass]}`;
-
+export function DeleteButton(props) {
     return (
-        <button
-            className={allClasses}
-            onClick={handleClick}
-            disabled={!enabledCondition}
-        >
-            {label}
-        </button>
+        <DeleteButtonWrapper {...props} className={props.className} title='Remove'>
+            <Icon name='bin' />
+        </DeleteButtonWrapper>
+    )
+}
+
+export function AddButton(props) {
+    return (
+        <AddButtonWrapper {...props} title='Add task'>
+            <Icon name='plus' />
+        </AddButtonWrapper>
+    )
+}
+
+export function Button(props) {
+    const { text } = props;
+    return (
+        <TextButtonWrapper {...props}>
+            {text}
+        </TextButtonWrapper>
     )
 }

@@ -1,40 +1,65 @@
-import React from "react";
-import styles from "./CSS/Task.module.css";
-import removeButton from "./assets/rubbish-bin-icon.svg";
+import React, { useState } from 'react';
+import { CheckBox, InputField, Name, Wrapper, RemoveButton } from './styles/Task.styled';
+import useApi from '../hooks/useApi';
 
 export default function Task(props) {
-    const { taskName, toggleCompletion, id, handleRemoveTask, completion } = props;
+    const { completion, id, taskName } = props;
+    const [onEdit, setOnEdit] = useState(false);
+    const [InputValue, setInputValue] = useState(taskName);
+    const { fetchData, removeTask, updateTask } = useApi(id);
 
-    function toggleCheckbox() {
-        toggleCompletion(id);
+    async function toggleCompletion() {
+        updateTask({ completion: !completion });
     }
 
-    function handleClickRemove() {
-        handleRemoveTask(id);
+    async function handleRemoveTask() {
+        await removeTask(id);
+        fetchData();
+    }
+
+    function toggleEditMode() {
+        setOnEdit(prev => !prev);
+    }
+
+    function handleOnChange(event) {
+        setInputValue(event.target.value);
+    }
+
+    function handleOnBlur() {
+        updateTask({
+            taskName: InputValue,
+        });
+        setOnEdit(false);
+    }
+
+    function handleKeypress(event) {
+        if (event.key === 'Escape') {
+            setOnEdit(false);
+        }
     }
 
     return (
-        <li className={styles['task--list-item']}>
-            <input
-                type="checkbox"
+        <Wrapper>
+            <CheckBox
                 id={id}
-                className={styles['task--checkbox']}
                 name={taskName}
-                checked={completion ? true : null}
-                onChange={toggleCheckbox}
+                checked={completion}
+                onChange={toggleCompletion}
             />
-            <label
-                htmlFor={id}
-                className={styles['task--checkbox-label']}
-            >
-                {taskName}
-            </label>
-            <img
-                src={removeButton}
-                className={`icon ${styles['task--rubbish-bin']}`}
-                onClick={handleClickRemove}
-                alt="Remove"
+            {
+                onEdit ?
+                    <InputField
+                        onChange={handleOnChange}
+                        onBlur={handleOnBlur}
+                        onKeyDown={handleKeypress}
+                        value={InputValue} /> :
+                    <Name htmlFor={id} onClick={toggleEditMode}>
+                        {taskName}
+                    </Name>
+            }
+            <RemoveButton
+                onClick={() => handleRemoveTask(id)}
             />
-        </li>
-    );
+        </Wrapper>
+    )
 }
