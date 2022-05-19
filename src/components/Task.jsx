@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { CheckBox, Name, Wrapper } from './styles/Task.styled';
-import { DeleteButton } from './Button';
+import { CheckBox, InputField, Name, Wrapper, RemoveButton } from './styles/Task.styled';
 import useApi from '../hooks/useApi';
 
 export default function Task(props) {
     const { completion, id, taskName } = props;
+    const [onEdit, setOnEdit] = useState(false);
+    const [InputValue, setInputValue] = useState(taskName);
     const { fetchData, removeTask, updateTask } = useApi(id);
 
     async function toggleCompletion() {
@@ -16,6 +17,27 @@ export default function Task(props) {
         fetchData();
     }
 
+    function toggleEditMode() {
+        setOnEdit(prev => !prev);
+    }
+
+    function handleOnChange(event) {
+        setInputValue(event.target.value);
+    }
+
+    function handleOnBlur() {
+        updateTask({
+            taskName: InputValue,
+        });
+        setOnEdit(false);
+    }
+
+    function handleKeypress(event) {
+        if (event.key === 'Escape') {
+            setOnEdit(false);
+        }
+    }
+
     return (
         <Wrapper>
             <CheckBox
@@ -24,10 +46,18 @@ export default function Task(props) {
                 checked={completion}
                 onChange={toggleCompletion}
             />
-            <Name htmlFor={id}>
-                {taskName}
-            </Name>
-            <DeleteButton
+            {
+                onEdit ?
+                    <InputField
+                        onChange={handleOnChange}
+                        onBlur={handleOnBlur}
+                        onKeyDown={handleKeypress}
+                        value={InputValue} /> :
+                    <Name htmlFor={id} onClick={toggleEditMode}>
+                        {taskName}
+                    </Name>
+            }
+            <RemoveButton
                 onClick={() => handleRemoveTask(id)}
             />
         </Wrapper>
