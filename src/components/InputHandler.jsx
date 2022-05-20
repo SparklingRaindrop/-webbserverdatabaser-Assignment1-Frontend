@@ -23,13 +23,10 @@ export default function InputHandler() {
 
         // when loaded OR user deleted the entire input by themselves
         if (inputValue.length === 0) {
-            //setShownTooltips(false);
             setHasValidInput(false);
         } else if (containsOnlySpace) {
             setHasValidInput(false);
-            //setShownTooltips(true);
         } else {
-            //setShownTooltips(false);
             setHasValidInput(true);
         }
     }, [inputValue]);
@@ -37,6 +34,7 @@ export default function InputHandler() {
     function handleKeypress(event) {
         if (hasValidInput && event.key === 'Enter') {
             addTask(inputValue);
+            setInputValue('');
         }
     }
 
