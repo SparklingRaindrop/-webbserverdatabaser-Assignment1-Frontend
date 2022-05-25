@@ -9,11 +9,11 @@ import { Title } from './components/styles/App.styled';
 import ToDoList from './components/ToDoList';
 
 export default function App() {
-    const { isLoading, fetchData } = useApi();
+    const { fetchData } = useApi();
 
     useEffect(() => {
         fetchData();
-    }, [isLoading]);
+    }, []);
 
     return (
         <ThemeProvider theme={themes}>
