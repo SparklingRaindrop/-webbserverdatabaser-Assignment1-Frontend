@@ -8,11 +8,16 @@ export default function useApi(query = '') {
     const [isLoading, setIsLoading] = useState(false);
     const setData = useSetRecoilState(dataState);
 
+    const fetch = axios.create({
+        baseURL: 'http://localhost:5000/todos/',
+        timeout: 2500
+    });
+
     async function fetchData() {
         setIsLoading(true);
         try {
-            const url = `http://localhost:5000/todos/`;
-            const response = await axios(url);
+            //const url = `http://localhost:5000/todos/`;
+            const response = await fetch();
             const data = response.data.sort(sortTasks);
             setData(data);
         } catch (e) {
@@ -21,9 +26,9 @@ export default function useApi(query = '') {
         setIsLoading(false);
     }
 
-    async function removeTask(id) {
+    async function removeTask() {
         try {
-            await axios.delete(`http://localhost:5000/todos/${id}`);
+            await fetch.delete(`/${query}`);
         } catch (e) {
             console.log(e);
         }
@@ -31,7 +36,7 @@ export default function useApi(query = '') {
 
     async function addTask(str) {
         try {
-            await axios.post('http://localhost:5000/todos/', {
+            await fetch.post('/', {
                 taskName: str,
                 completion: false,
             });
@@ -43,7 +48,7 @@ export default function useApi(query = '') {
 
     async function updateTask(obj) {
         try {
-            await axios.patch(`http://localhost:5000/todos/${query}`, obj);
+            await fetch.patch(`/${query}`, obj);
             fetchData();
         } catch (e) {
             console.log(e);
