@@ -16,7 +16,6 @@ export default function useApi(query = '') {
     async function fetchData() {
         setIsLoading(true);
         try {
-            //const url = `http://localhost:5000/todos/`;
             const response = await fetch();
             const data = response.data.sort(sortTasks);
             setData(data);
