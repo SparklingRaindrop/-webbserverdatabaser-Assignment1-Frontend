@@ -13,7 +13,7 @@ export default function Task(props) {
     }
 
     async function handleRemoveTask() {
-        await removeTask(id);
+        await removeTask();
         fetchData();
     }
 
