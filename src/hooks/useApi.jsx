@@ -9,8 +9,7 @@ export default function useApi(query = '') {
     const setData = useSetRecoilState(dataState);
 
     const fetch = axios.create({
-        baseURL: 'http://localhost:5000/todos/',
-        timeout: 2500
+        baseURL: 'http://localhost:5000/todos',
     });
 
     async function fetchData() {
@@ -20,14 +19,15 @@ export default function useApi(query = '') {
             const data = response.data.sort(sortTasks);
             setData(data);
         } catch (e) {
-            console.log('There is something wrong');
+            console.log('There is something wrong with network');
         }
         setIsLoading(false);
     }
 
-    async function removeTask() {
+    // Cannot use "query" here for remove all at once button
+    async function removeTask(id) {
         try {
-            await fetch.delete(`/${query}`);
+            await fetch.delete(`/${id}`);
         } catch (e) {
             console.log(e);
         }

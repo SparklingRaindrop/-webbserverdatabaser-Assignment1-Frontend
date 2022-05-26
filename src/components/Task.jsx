@@ -12,8 +12,8 @@ export default function Task(props) {
         updateTask({ completion: !completion });
     }
 
-    async function handleRemoveTask() {
-        await removeTask();
+    async function handleRemoveTask(id) {
+        await removeTask(id);
         fetchData();
     }
 
